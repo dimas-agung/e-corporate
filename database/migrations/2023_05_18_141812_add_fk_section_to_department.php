@@ -26,7 +26,7 @@ class AddFkdepartmentToDepartment extends Migration
      */
     public function down()
     {
-        Schema::table('secrion', function (Blueprint $table) {
+        Schema::table('section', function (Blueprint $table) {
             //
         });
     }
