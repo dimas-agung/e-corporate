@@ -15,7 +15,7 @@ class AddFkUserToRole extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->string('role_code')->after('employee_code');
+            $table->string('role_code')->after('username');
             $table->foreign('role_code')->references('role_code')->on('role');
         });
     }

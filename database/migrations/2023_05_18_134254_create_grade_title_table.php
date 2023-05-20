@@ -17,7 +17,7 @@ class CreateGradeTitleTable extends Migration
             $table->id();
             $table->string('grade_title_code')->unique();
             $table->string('grade_title_name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

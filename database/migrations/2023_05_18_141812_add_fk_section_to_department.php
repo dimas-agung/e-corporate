@@ -15,7 +15,7 @@ class AddFkdepartmentToDepartment extends Migration
     {
         Schema::table('section', function (Blueprint $table) {
             //
-            $table->foreign('department_code')->references('department_code')->on('department');
+            $table->foreign('department_code')->references('department_code')->on('department')->onDelete('cascade');
         });
     }
 

@@ -17,7 +17,7 @@ class CreateMaritalStatusTable extends Migration
             $table->id();
             $table->string('marital_status_code')->unique();
             $table->string('marital_status_name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

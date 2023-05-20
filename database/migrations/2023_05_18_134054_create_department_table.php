@@ -17,7 +17,7 @@ class CreateDepartmentTable extends Migration
             $table->id();
             $table->string('department_code')->unique();
             $table->string('department_name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('user_updated')->nullable();
             $table->timestamps();
         });

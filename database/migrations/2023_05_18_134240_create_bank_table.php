@@ -17,7 +17,7 @@ class CreateBankTable extends Migration
             $table->id();
             $table->string('bank_code')->unique();
             $table->string('bank_name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

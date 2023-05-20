@@ -15,10 +15,10 @@ class CreateSectionTable extends Migration
     {
         Schema::create('section', function (Blueprint $table) {
             $table->id();
-            $table->string('department_code')->unique();
+            $table->string('department_code');
             $table->string('section_code')->unique();
             $table->string('section_name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
