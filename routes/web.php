@@ -20,3 +20,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::controller(App\Http\Controllers\EmployeeController::class)->group(function () {
+    Route::get('/employee', 'index');
+    Route::get('/employee/create', 'create');
+    Route::post('/employee', 'store');
+    Route::get('/employee/{employee}', 'show');
+    Route::get('/employee/{employee}/edit', 'edit');
+    Route::put('/employee/{employee}', 'update')->name('employee.update');
+    Route::delete('/employee/{employee}', 'destroy');
+});
