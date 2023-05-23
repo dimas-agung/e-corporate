@@ -10,7 +10,11 @@ use Illuminate\Database\Query\Grammars\Grammar;
 class Employee extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+    // use SoftDeletes;
+
+    protected $table = 'employee';
+    protected $primaryKey = 'employee_code';
+    public $incrementing = false;
     protected $guarded = [];
 
     public function department()

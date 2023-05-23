@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class GradeTitle extends Model
+class Role extends Model
 {
     use HasFactory;
-    // use SoftDeletes;
+    use SoftDeletes;
 
-    protected $table = 'grade_title';
+    protected $table = 'role';
     protected $guarded = [];
 }

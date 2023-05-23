@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class MaritalStatus extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+    // use SoftDeletes;
+
+    protected $table = 'marital_status';
     protected $guarded = [];
 }
