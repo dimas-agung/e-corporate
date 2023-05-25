@@ -23,12 +23,25 @@ class EmployeeController extends Controller
     public function index()
     {
         //
-        $religions = [];
+        $religions = [
+            'Islam',
+            'Kristen',
+            'Budha',
+            'Hindu',
+        ];
+        $grade_title_leader = [
+            'GDT001',
+            'GDT002',
+            'GDT003',
+            'GDT004'
+        ];
         $maritals_status = MaritalStatus::orderBy('marital_status_name')->get();
         $grade_titles = GradeTitle::orderBy('grade_title_name')->get();
         $departments = Department::orderBy('department_name')->get();
         $sections = Section::orderBy('section_name')->get();
         $banks = Bank::orderBy('bank_name')->get();
+        $leader = Employee::whereIn('grade_title_code', $grade_title_leader)->get();
+        // return $leader;
         return response()->view('pages.master.employee', [
             'maritals_status' => $maritals_status,
             'departments' => $departments,
@@ -36,6 +49,7 @@ class EmployeeController extends Controller
             'religions' => $religions,
             'banks' => $banks,
             'grade_titles' => $grade_titles,
+            'leader' => $leader,
         ]);
     }
 

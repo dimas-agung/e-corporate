@@ -133,7 +133,11 @@
                                                         <select name="religion" class="form-control" id="religion"
                                                             required>
                                                             <option>Pilih Agama</option>
-                                                            <option value="Islam">Islam</option>
+                                                            @foreach ($religions as $item)
+                                                                <option value="<?= $item ?>">
+                                                                    <?= $item ?>
+                                                                </option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
@@ -263,7 +267,7 @@
                                                     <div class="form-group">
                                                         <label>Department</label>
                                                         <select name="department_code" class="form-control slc2"
-                                                            id="departement_code" required>
+                                                            id="department_code" required>
                                                             <option>-- Pilih Department --</option>
                                                             @foreach ($departments as $item)
                                                                 <option value="<?= $item->department_code ?>">
@@ -295,7 +299,11 @@
                                                         <select name="direct_leader_code" class="form-control"
                                                             id="direct_leader_code">
                                                             <option>Pilih Atasan</option>
-                                                            <option value="EMP0006">EMP0006</option>
+                                                            @foreach ($leader as $item)
+                                                                <option value="<?= $item->employee_code ?>">
+                                                                    <?= $item->employee_name ?>
+                                                                </option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
@@ -367,7 +375,7 @@
             </form>
         </div>
         <div id="form-update">
-            <form action="{{ route('employee.update', 1) }}" method="POST" id="form-karyawan-update">
+            <form action="" method="POST" id="form-karyawan-update">
                 @csrf
                 @method('PUT')
                 <div class="section-body">
@@ -415,7 +423,7 @@
                                                 <div class="form-group">
                                                     <label for="employee_name">Nama Karyawan</label>
                                                     <input type="text" class="form-control" name="employee_name"
-                                                        name="employee_name_edit" placeholder="Masukkan Nama Karyawan.."
+                                                        id="employee_name_edit" placeholder="Masukkan Nama Karyawan.."
                                                         required>
                                                 </div>
                                             </div>
@@ -498,6 +506,11 @@
                                                         <select name="religion" class="form-control" id="religion_edit"
                                                             required>
                                                             <option>Pilih Agama</option>
+                                                            @foreach ($religions as $item)
+                                                                <option value="<?= $item ?>">
+                                                                    <?= $item ?>
+                                                                </option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
@@ -624,8 +637,8 @@
                                                 <div class="col-6">
                                                     <div class="form-group">
                                                         <label>Department</label>
-                                                        <select name="departement_code" class="form-control slc2"
-                                                            id="departement_code_edit" required>
+                                                        <select name="department_code" class="form-control slc2"
+                                                            id="department_code_edit" required>
                                                             <option>-- Pilih Department --</option>
                                                             @foreach ($departments as $item)
                                                                 <option value="<?= $item->department_code ?>">
@@ -657,6 +670,11 @@
                                                         <select name="direct_leader_code" class="form-control"
                                                             id="direct_leader_code_edit">
                                                             <option>Pilih Atasan</option>
+                                                            @foreach ($leader as $item)
+                                                                <option value="<?= $item->employee_code ?>">
+                                                                    <?= $item->employee_name ?>
+                                                                </option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
@@ -666,7 +684,7 @@
                                                     <div class="form-group">
                                                         <label>Peranan Pekerjaan</label>
                                                         <input type="text" name="job_title" class="form-control"
-                                                            id="job_title_edit" required>
+                                                            id="job_title_edit">
 
                                                     </div>
                                                 </div>
@@ -747,7 +765,7 @@
                                 <th>#</th>
                                 <th>No Karyawan</th>
                                 <th>Nama</th>
-                                <th>Departement</th>
+                                <th>Department</th>
                                 <th>No Telpon</th>
                                 <th>Action</th>
                             </tr>
@@ -793,7 +811,7 @@
                     data: 'Nama'
                 },
                 {
-                    data: 'Departement'
+                    data: 'Department'
                 },
                 {
                     data: 'No Telpon'
@@ -832,7 +850,7 @@
                             '': no,
                             'No Karyawan': this.employee_code,
                             'Nama': this.employee_name,
-                            'Departement': this.department.department_name,
+                            'Department': this.department.department_name,
                             'No Telpon': this.phone_number,
                             'Action': `<a class="btn btn-info" title="View Detail" onclick="getDetail('${this.employee_code}')"><i class="fas fa-eye"></i></a>`
                         });
@@ -858,6 +876,8 @@
                 },
                 success: function(response) {
                     $('#employee_name_edit').val(response.employee_name)
+                    $('#birth_place_edit').val(response.birth_place)
+                    $('#birth_date_edit').val(response.birth_date)
                     $('#gender_edit').val(response.gender)
                     $('#religion_edit').val(response.religion)
                     $('#nik_edit').val(response.nik)
@@ -870,7 +890,7 @@
                     $('#status_job_edit').val(response.status_job)
                     $('#start_date_edit').val(response.start_date)
                     $('#end_date_edit').val(response.end_date)
-                    $('#departement_code_edit').val(response.departement_code)
+                    $('#department_code_edit').val(response.department_code)
                     $('#section_code_edit').val(response.section_code)
                     $('#direct_leader_code_edit').val(response.direct_leader_code)
                     $('#job_title_edit').val(response.job_title)
@@ -901,5 +921,41 @@
             $('form#form-karyawan').trigger("reset"); //Line1
             $('form#form-karyawan select, form input[type=checkbox]').trigger("change");
         }
+
+        $('#form-karyawan-update').on('submit', function(e) {
+            e.preventDefault();
+            // var formData = $(this).serialize();
+            var formData = $(this).serializeArray();
+            let employee_code = $('#employee_code_edit').val()
+            var url = '{{ route('employee.update', ':id') }}';
+            url = url.replace(':id', employee_code);
+            // console.log(url);
+            // return;
+            // console.log($('#eror').val());
+            // return false;
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: [...formData],
+                beforeSend: function() {
+                    // $("#buttonSubmit").prop('disabled', true);
+                },
+                success: function(response) {
+                    // console.log(response);
+                    // $("#buttonSubmit").prop('disabled', false);
+                    iziToast.success({
+                        title: 'Sukses!',
+                        message: 'Data Karyawan Berhasil di Ubah!',
+                        position: 'topRight',
+                        timeout: 2000,
+                        onClosed: function() {
+                            window.location.href = document.referrer
+                        }
+                    });
+                },
+
+            })
+
+        });
     </script>
 @endsection

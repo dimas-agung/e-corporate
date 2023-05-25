@@ -32,7 +32,7 @@ class CreateEmployeeTable extends Migration
             $table->string('end_date');
             $table->string('address');
             $table->string('address_2')->nullable();
-            $table->string('direct_leader_code')->comment('employee_code leader');
+            $table->string('direct_leader_code')->nullable()->comment('employee_code leader');
             $table->string('status_job');
             $table->text('job_title')->nullable();
             $table->string('marital_status_code');
