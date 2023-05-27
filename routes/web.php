@@ -18,8 +18,9 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::controller(App\Http\Controllers\EmployeeController::class)->group(function () {
     Route::get('/employee', 'index');
@@ -29,7 +30,7 @@ Route::controller(App\Http\Controllers\EmployeeController::class)->group(functio
     Route::get('/employee/{employee}/edit', 'edit');
     Route::put('/employee/{employee}', 'update')->name('employee.update');
     Route::delete('/employee/{employee}', 'destroy');
-
     Route::get('/api/data_employee', 'dataEmployee')->name('employee.data_employee');
 });
-// Route::get('/employee/data_employee', [App\Http\Controllers\EmployeeController::class, 'dataEmployee']);
+
+Route::get('/api/data_section', [App\Http\Controllers\SectionController::class, 'dataSection'])->name('section.data_section');

@@ -267,7 +267,7 @@
                                                     <div class="form-group">
                                                         <label>Department</label>
                                                         <select name="department_code" class="form-control slc2"
-                                                            id="department_code" required>
+                                                            id="department_code" required onchange="getSection()">
                                                             <option>-- Pilih Department --</option>
                                                             @foreach ($departments as $item)
                                                                 <option value="<?= $item->department_code ?>">
@@ -283,11 +283,7 @@
                                                         <select name="section_code" class="form-control slc2"
                                                             id="section_code">
                                                             <option>-- Pilih Seksi --</option>
-                                                            @foreach ($sections as $item)
-                                                                <option value="<?= $item->section_code ?>">
-                                                                    <?= $item->section_name ?>
-                                                                </option>
-                                                            @endforeach
+
                                                         </select>
                                                     </div>
                                                 </div>
@@ -301,7 +297,8 @@
                                                             <option>Pilih Atasan</option>
                                                             @foreach ($leader as $item)
                                                                 <option value="<?= $item->employee_code ?>">
-                                                                    <?= $item->employee_name ?>
+                                                                    <?= $item->employee_name ?> -
+                                                                    <?= $item->department->department_name ?>
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -365,6 +362,11 @@
                                                 <a class="btn btn-danger"><i class="fas fa-refresh"></i> Reset</a>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="float-right">
+                                        <button class="btn btn-success"><i class="fas fa-save"></i>
+                                            Simpan</button>
+                                        <a class="btn btn-danger"><i class="fas fa-refresh"></i> Reset</a>
                                     </div>
                                 </div>
                             </div>
@@ -638,7 +640,8 @@
                                                     <div class="form-group">
                                                         <label>Department</label>
                                                         <select name="department_code" class="form-control slc2"
-                                                            id="department_code_edit" required>
+                                                            id="department_code_edit" required
+                                                            onchange="getSectionEdit()">
                                                             <option>-- Pilih Department --</option>
                                                             @foreach ($departments as $item)
                                                                 <option value="<?= $item->department_code ?>">
@@ -730,12 +733,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="float-right">
-                                                <button class="btn btn-success"><i class="fas fa-save"></i>
-                                                    Simpan</button>
-                                                <a class="btn btn-danger"><i class="fas fa-refresh"></i> Reset</a>
-                                            </div>
+
                                         </div>
+                                    </div>
+                                    <div class="float-right">
+                                        <button class="btn btn-success"><i class="fas fa-save"></i>
+                                            Simpan</button>
+                                        <a class="btn btn-danger"><i class="fas fa-refresh"></i> Reset</a>
                                     </div>
                                 </div>
 
@@ -860,12 +864,66 @@
                         no++;
                         // $('#tbEmployee tbody').append(`
 
-                    });
-                    tableRBA.rows.add(data).draw();
+                });
+                tableRBA.rows.add(data).draw();
+            }
+        })
+
+    }
+
+    function getSection() {
+        let department_code = $('#department_code').val()
+        $('#section_code')
+            .empty()
+            .append('<option selected="selected" value="">-- PILIH SECTION --</option>');
+        // tableRBA.clear().draw();
+        $.ajax({
+            type: "GET",
+            url: "{{ route('section.data_section') }}",
+            data: {
+                department_code: department_code
+            },
+            success: function(response) {
+                let no = 1;
+                let data = [];
+                $.each(response, function() {
+                    $('#section_code').append(
+                        `<option value="${this.section_code}">${this.section_name}</option>`);
+                    // $("#section_code").append($("<option />").val(this.section_code).text(this
+                    //     .section_name));
+                })
+
+            }
+        })
+    }
+
+    function getSectionEdit() {
+        let department_code = $('#department_code_edit').val()
+        $('#section_code_edit')
+            .empty()
+            .append('<option selected="selected" value="">-- PILIH SECTION --</option>');
+        // tableRBA.clear().draw();
+        $.ajax({
+            type: "GET",
+            url: "{{ route('section.data_section') }}",
+            data: {
+                department_code: department_code
+            },
+            success: function(response) {
+                let no = 1;
+                let data = [];
+                $.each(response, function() {
+                    $('#section_code_edit').append(
+                        `<option value="${this.section_code}">${this.section_name}</option>`);
+                        // $("#section_code").append($("<option />").val(this.section_code).text(this
+                        //     .section_name));
+                    })
+
                 }
             })
-
         }
+
+
 
         function getDetail(employee_code) {
             $.ajax({
