@@ -109,9 +109,14 @@
                         <a class="collapse-item" href="cards.html">
                             <span>Ubah Password</span>
                         </a>
-                        <a class="collapse-item" href="cards.html">
+                        <a class="collapse-item" href="cards.html"
+                            onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
                             <span>Logout</span>
                         </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     </div>
                 </div>
             </li>
@@ -249,6 +254,7 @@
     {{-- datatable --}}
     <script src="{{ asset('js/datatable-1.10.20.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/select2.full.min.js') }}"></script> --}}
 
     @yield('js')
 
