@@ -29,7 +29,7 @@ class CreateEmployeeTable extends Migration
             $table->string('religion');
             $table->string('grade_title_code');
             $table->string('start_date');
-            $table->string('end_date');
+            $table->string('end_date')->default('1900-01-01');
             $table->string('address');
             $table->string('address_2')->nullable();
             $table->string('direct_leader_code')->nullable()->comment('employee_code leader');
