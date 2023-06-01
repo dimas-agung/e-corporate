@@ -992,7 +992,7 @@
             // console.log($('#eror').val());
             // return false;
             $.ajax({
-                type: "PUT",
+                type: "POST",
                 url: url,
                 data: [...formData],
                 beforeSend: function() {
