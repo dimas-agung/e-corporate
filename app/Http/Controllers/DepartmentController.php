@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
-use App\Models\Employee;
-use App\Models\Section;
 use Illuminate\Http\Request;
 
-class SectionController extends Controller
+class DepartmentController extends Controller
 {
     private $title = 'Seksi';
     public function __construct()
@@ -23,7 +21,7 @@ class SectionController extends Controller
     {
         // return $leader;
         $departments = Department::orderBy('department_name')->get();
-        return response()->view('pages.master.section', [
+        return response()->view('pages.master.department', [
             'title' => $this->title,
             'departments' => $departments
 
@@ -50,13 +48,12 @@ class SectionController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'section_code' => ['required'],
-            'section_name' => ['required'],
             'department_code' => ['required'],
+            'department_name' => ['required'],
         ]);
-        $section = Section::create($validated);
+        $department = Department::create($validated);
 
-        return redirect('section')->with('success', 'Data Seksi berhasil disimpan!');
+        return redirect('department')->with('success', 'Data Seksi berhasil disimpan!');
     }
 
     /**
@@ -88,16 +85,15 @@ class SectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Section $section)
+    public function update(Request $request, Department $department)
     {
         //
         $validated = $request->validate([
-            'section_code' => ['required'],
-            'section_name' => ['required'],
             'department_code' => ['required'],
+            'department_name' => ['required'],
         ]);
-        $section = $section->update($validated);
-        return redirect('section')->with('success', 'Data Section has been updated!');
+        $department = $department->update($validated);
+        return redirect('department')->with('success', 'Data Department has been updated!');
     }
 
     /**
@@ -106,24 +102,22 @@ class SectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Section $employee)
+    public function destroy(Department $employee)
     {
         //
         $employee->delete();
-        return redirect('employee')->with('success', 'Data Product has been deleted!');
+        return redirect('employee')->with('success', 'Data Department has been deleted!');
     }
     //
-    public function dataSection(Request $request)
+    public function dataDepartment(Request $request)
     {
         // return 123;
         if ($request->input('department_code') != null) {
-            $section = Section::where('department_code', $request->input('department_code'))->with(['department'])->orderBy('section_name')->get();
-        } else if ($request->input('section_code') != null) {
-            $section = Section::where('section_code', $request->input('section_code'))->with(['department'])->orderBy('section_name')->first();
+            $department = Department::where('department_code', $request->input('department_code'))->orderBy('department_name')->get();
         } else {
-            $section = Section::with(['department'])->orderBy('section_name')->get();
+            $department = Department::with(['department'])->orderBy('department_name')->get();
         }
         return response()
-            ->json($section);
+            ->json($department);
     }
 }

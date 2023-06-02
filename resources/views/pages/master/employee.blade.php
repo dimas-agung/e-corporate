@@ -376,7 +376,7 @@
 
             </form>
         </div>
-        <div id="form-update">
+        <div id="form-update" style="display:none">
             <form action="" method="POST" id="form-karyawan-update">
                 @csrf
                 @method('PUT')

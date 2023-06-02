@@ -11,6 +11,8 @@ class Department extends Model
     use HasFactory;
     // use SoftDeletes;
     protected $table = 'department';
+    protected $primaryKey = 'department_code';
+    public $incrementing = false;
     protected $guarded = [];
 
     public function section()

@@ -82,8 +82,8 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Data Karyawan</h6>
                         <a class="collapse-item" href="{{ url('employee') }}">Karyawan</a>
-                        <a class="collapse-item" href="cards.html">Departemen</a>
-                        <a class="collapse-item" href="cards.html">Seksi</a>
+                        <a class="collapse-item" href="{{ url('department') }}">Departemen</a>
+                        <a class="collapse-item" href="{{ url('section') }}">Seksi</a>
                         <a class="collapse-item" href="cards.html">Report</a>
                     </div>
                 </div>
