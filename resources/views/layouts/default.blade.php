@@ -91,10 +91,13 @@
                         <h6 class="collapse-header ">Data Karyawan</h6>
                         <a class="collapse-item {{ request()->is('employee') ? 'active' : '' }}"
                             href="{{ url('employee') }}">Karyawan</a>
-                        <a class="collapse-item" href="{{ url('department') }}">Departemen</a>
-                        <a class="collapse-item" href="{{ url('section') }}">Seksi</a>
-                        <a class="collapse-item" href="{{ url('grade_title') }}">Grade Title</a>
-                        <a class="collapse-item" href="cards.html">Report</a>
+                        <a class="collapse-item {{ request()->is('department') ? 'active' : '' }}"
+                            href="{{ url('department') }}">Departemen</a>
+                        <a class="collapse-item {{ request()->is('section') ? 'active' : '' }}"
+                            href="{{ url('section') }}">Seksi</a>
+                        <a class="collapse-item {{ request()->is('grade_title') ? 'active' : '' }}"
+                            href="{{ url('grade_title') }}">Grade Title</a>
+                        <a class="collapse-item" href="#">Report</a>
                     </div>
                 </div>
             </li>
