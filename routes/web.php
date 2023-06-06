@@ -52,3 +52,13 @@ Route::controller(App\Http\Controllers\DepartmentController::class)->group(funct
     Route::delete('/department/{department}', 'destroy');
     Route::get('/api/data_department', 'dataDepartment')->name('department.data_department');
 });
+Route::controller(App\Http\Controllers\GradeTitleController::class)->group(function () {
+    Route::get('/grade_title', 'index');
+    Route::get('/grade_title/create', 'create');
+    Route::post('/grade_title', 'store')->name('grade_title.store');
+    Route::get('/grade_title/{grade_title}', 'show');
+    Route::get('/grade_title/{grade_title}/edit', 'edit');
+    Route::put('/grade_title/{grade_title}', 'update')->name('grade_title.update');
+    Route::delete('/grade_title/{grade_title}', 'destroy');
+    Route::get('/api/data_grade_title', 'dataGradeTitle')->name('grade_title.data_grade_title');
+});
