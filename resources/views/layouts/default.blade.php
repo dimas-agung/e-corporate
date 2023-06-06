@@ -57,8 +57,8 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+            <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ url('/') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -72,18 +72,28 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+            <li class="nav-item {{ request()->is('employee') ? 'active' : '' }}">
+                <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Data Karyawan</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseTwo"
+                    class="collapse 
+                    {{ request()->is('employee') ||
+                    request()->is('department') ||
+                    request()->is('section') ||
+                    request()->is('grade_title')
+                        ? 'in show'
+                        : '' }}"
+                    aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Data Karyawan</h6>
-                        <a class="collapse-item" href="{{ url('employee') }}">Karyawan</a>
+                        <h6 class="collapse-header ">Data Karyawan</h6>
+                        <a class="collapse-item {{ request()->is('employee') ? 'active' : '' }}"
+                            href="{{ url('employee') }}">Karyawan</a>
                         <a class="collapse-item" href="{{ url('department') }}">Departemen</a>
                         <a class="collapse-item" href="{{ url('section') }}">Seksi</a>
+                        <a class="collapse-item" href="{{ url('grade_title') }}">Grade Title</a>
                         <a class="collapse-item" href="cards.html">Report</a>
                     </div>
                 </div>
