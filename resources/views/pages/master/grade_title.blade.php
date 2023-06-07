@@ -325,7 +325,7 @@
                         position: 'topRight',
                         timeout: 2000,
                         onClosed: function() {
-                            window.location.href = document.referrer
+                            window.location.href = '{{ url('grade_title') }}'
                         }
                     });
                 },
