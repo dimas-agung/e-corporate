@@ -945,6 +945,7 @@
                     $('#address_edit').val(response.address)
                     $('#adress_2_edit').val(response.address_2)
                     $('#grade_title_code_edit').val(response.grade_title_code)
+                    $('#marital_status_code_edit').val(response.marital_status_code)
                     $('#status_job_edit').val(response.status_job)
                     $('#start_date_edit').val(response.start_date)
                     $('#end_date_edit').val(response.end_date)
