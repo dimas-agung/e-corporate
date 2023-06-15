@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFkSectionToDepartment extends Migration
+class CreateUnitTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class AddFkSectionToDepartment extends Migration
      */
     public function up()
     {
-        Schema::table('section', function (Blueprint $table) {
-            //
-            $table->foreign('department_code')->references('department_code')->on('department')->onDelete('cascade');
+        Schema::create('unit', function (Blueprint $table) {
+            $table->id();
+            $table->string('unit_code')->unique();
+            $table->string('unit_name');
+            $table->text('description')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -26,8 +29,6 @@ class AddFkSectionToDepartment extends Migration
      */
     public function down()
     {
-        Schema::table('section', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('unit');
     }
 }

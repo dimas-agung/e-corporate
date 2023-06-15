@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Product\UnitController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,7 +40,7 @@ Route::controller(App\Http\Controllers\SectionController::class)->group(function
     Route::get('/section/{section}', 'show');
     Route::get('/section/{section}/edit', 'edit');
     Route::put('/section/{section}', 'update')->name('section.update');
-    Route::delete('/section/{section}', 'destroy');
+    Route::delete('/section/{section}', 'destroy')->name('section.destroy');
     Route::get('/api/data_section', 'dataSection')->name('section.data_section');
 });
 Route::controller(App\Http\Controllers\DepartmentController::class)->group(function () {
@@ -49,7 +50,7 @@ Route::controller(App\Http\Controllers\DepartmentController::class)->group(funct
     Route::get('/department/{department}', 'show');
     Route::get('/department/{department}/edit', 'edit');
     Route::put('/department/{department}', 'update')->name('department.update');
-    Route::delete('/department/{department}', 'destroy');
+    Route::delete('/department/{department}', 'destroy')->name('department.destroy');
     Route::get('/api/data_department', 'dataDepartment')->name('department.data_department');
 });
 Route::controller(App\Http\Controllers\GradeTitleController::class)->group(function () {
@@ -61,4 +62,17 @@ Route::controller(App\Http\Controllers\GradeTitleController::class)->group(funct
     Route::put('/grade_title/{grade_title}', 'update')->name('grade_title.update');
     Route::delete('/grade_title/{grade_title}', 'destroy');
     Route::get('/api/data_grade_title', 'dataGradeTitle')->name('grade_title.data_grade_title');
+});
+
+Route::prefix('/product')->group(function () {
+    Route::controller(UnitController::class)->group(function () {
+        Route::get('/unit', 'index');
+        Route::get('/unit/create', 'create');
+        Route::post('/unit', 'store')->name('unit.store');
+        Route::get('/unit/{unit}', 'show');
+        Route::get('/unit/{unit}/edit', 'edit');
+        Route::put('/unit/{unit}', 'update')->name('unit.update');
+        Route::delete('/unit/{unit}', 'destroy')->name('unit.destroy');
+        Route::get('/api/data_unit', 'dataUnit')->name('unit.data_unit');
+    });
 });

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Product;
 
-use App\Models\Department;
+use App\Http\Controllers\Controller;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
-class DepartmentController extends Controller
+class UnitController extends Controller
 {
     private $title = 'Seksi';
     public function __construct()
@@ -20,10 +21,10 @@ class DepartmentController extends Controller
     public function index()
     {
         // return 123;
-        $departments = Department::orderBy('department_name')->get();
-        return response()->view('pages.master.department', [
+        $units = Unit::orderBy('unit_name')->get();
+        return response()->view('pages.product.unit.index', [
             'title' => $this->title,
-            'departments' => $departments
+            'units' => $units
 
         ]);
     }
@@ -48,13 +49,13 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'department_code' => ['required'],
-            'department_name' => ['required'],
+            'unit_code' => ['required'],
+            'unit_name' => ['required'],
             'description' => ['sometimes', 'nullable'],
         ]);
-        $department = Department::create($validated);
+        $unit = Unit::create($validated);
 
-        return redirect('department')->with('success', 'Data Seksi berhasil disimpan!');
+        return redirect('product/unit')->with('success', 'Data Seksi berhasil disimpan!');
     }
 
     /**
@@ -86,16 +87,16 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request, Unit $unit)
     {
         //
         $validated = $request->validate([
-            // 'department_code' => ['required'],
-            'department_name' => ['required'],
+            // 'unit_code' => ['required'],
+            'unit_name' => ['required'],
             'description' => ['sometimes', 'nullable'],
         ]);
-        $department = $department->update($validated);
-        return redirect('department')->with('success', 'Data Department has been updated!');
+        $unit = $unit->update($validated);
+        return redirect('product/unit')->with('success', 'Data Unit has been updated!');
     }
 
     /**
@@ -104,22 +105,22 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Department $department)
+    public function destroy(Unit $unit)
     {
         //
-        $department->delete();
-        return redirect('department')->with('success', 'Data Department has been deleted!');
+        $unit->delete();
+        return redirect('product/unit')->with('success', 'Data Unit has been deleted!');
     }
     //
-    public function dataDepartment(Request $request)
+    public function dataUnit(Request $request)
     {
         // return 123;
-        if ($request->input('department_code') != null) {
-            $department = Department::where('department_code', $request->input('department_code'))->orderBy('department_name')->get();
+        if ($request->input('unit_code') != null) {
+            $unit = Unit::where('unit_code', $request->input('unit_code'))->orderBy('unit_name')->first();
         } else {
-            $department = Department::with(['department'])->orderBy('department_name')->get();
+            $unit = Unit::orderBy('unit_name')->get();
         }
         return response()
-            ->json($department);
+            ->json($unit);
     }
 }

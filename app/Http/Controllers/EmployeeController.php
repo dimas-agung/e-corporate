@@ -140,7 +140,8 @@ class EmployeeController extends Controller
             'rekening_number' => $request->input('rekening_number'),
             'description' => $request->input('description'),
         ]);
-        return redirect('employee')->with('success', 'Data Employee has been updated!');
+
+        return redirect('employee')->with('success', 'Data Karyawan berhasil diupdate!');
     }
 
     /**

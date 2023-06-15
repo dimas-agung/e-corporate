@@ -73,12 +73,12 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item {{ request()->is('employee') ? 'active' : '' }}">
-                <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#nav-karyawan"
+                    aria-expanded="true" aria-controls="nav-karyawan">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Data Karyawan</span>
                 </a>
-                <div id="collapseTwo"
+                <div id="nav-karyawan"
                     class="collapse 
                     {{ request()->is('employee') ||
                     request()->is('department') ||
@@ -101,6 +101,39 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item ">
+                <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#nav-produk"
+                    aria-expanded="true" aria-controls="nav-produk">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Data Produk</span>
+                </a>
+                <div id="nav-produk"
+                    class="collapse 
+                    {{ request()->is('composit') || request()->is('uom') || request()->is('unit') ? 'in show' : '' }}"
+                    aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header ">Master Satuan</h6>
+                        <a class="collapse-item {{ request()->is('product/unit') ? 'active' : '' }}"
+                            href="{{ url('product/unit') }}">Unit</a>
+                        <a class="collapse-item {{ request()->is('product/composit') ? 'active' : '' }}"
+                            href="{{ url('department') }}">Komposit</a>
+
+                        <h6 class="collapse-header ">Master Material</h6>
+                        <a class="collapse-item {{ request()->is('product/material') ? 'active' : '' }}"
+                            href="{{ url('employee') }}">Material</a>
+                        <a class="collapse-item {{ request()->is('product/material_category') ? 'active' : '' }}"
+                            href="{{ url('department') }}">Kategori Material</a>
+
+
+                        <h6 class="collapse-header ">Master Produk</h6>
+                        <a class="collapse-item {{ request()->is('product/product') ? 'active' : '' }}"
+                            href="{{ url('employee') }}">Produk</a>
+                        <a class="collapse-item {{ request()->is('product/product_category') ? 'active' : '' }}"
+                            href="{{ url('department') }}">Kategori Produk</a>
+
+                    </div>
+                </div>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -111,12 +144,12 @@
                 User
             </div>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#nav-user"
+                    aria-expanded="true" aria-controls="nav-user">
                     <i class="fas fa-user-alt"></i>
                     <span>{{ Auth::user()->employee->employee_name }}</span></a>
                 </a>
-                <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="nav-user" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">User</h6>
                         <a class="collapse-item" href="cards.html">
@@ -242,7 +275,7 @@
 
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
     <!-- Page level plugins -->
     {{-- <script src="vendor/chart.js/Chart.min.js"></script> --}}

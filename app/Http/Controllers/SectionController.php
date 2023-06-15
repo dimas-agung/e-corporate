@@ -53,6 +53,7 @@ class SectionController extends Controller
             'section_code' => ['required'],
             'section_name' => ['required'],
             'department_code' => ['required'],
+            'description' => ['sometimes', 'nullable'],
         ]);
         $section = Section::create($validated);
 
@@ -92,9 +93,10 @@ class SectionController extends Controller
     {
         //
         $validated = $request->validate([
-            'section_code' => ['required'],
+            // 'section_code' => ['required'],
             'section_name' => ['required'],
             'department_code' => ['required'],
+            'description' => ['sometimes', 'nullable'],
         ]);
         $section = $section->update($validated);
         return redirect('section')->with('success', 'Data Section has been updated!');
@@ -106,11 +108,11 @@ class SectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Section $employee)
+    public function destroy(Section $section)
     {
         //
-        $employee->delete();
-        return redirect('employee')->with('success', 'Data Product has been deleted!');
+        $section->delete();
+        return redirect('section')->with('success', 'Data Product has been deleted!');
     }
     //
     public function dataSection(Request $request)

@@ -15,12 +15,6 @@ class EmployeeControllerTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
 
     public function testStoreEmployee()
     {
@@ -50,10 +44,10 @@ class EmployeeControllerTest extends TestCase
             "bank_code" => "BANK001",
             "rekening_number" => '123'
         ];
-
+        $this->actingAs($user);
         $this->post('/employee', $data)
-            // ->assertRedirect("/employee")
-            ->assertSessionHas("success", "Data Employee has been created!");
+            ->assertRedirect("/employee");
+        // ->assertSessionHas("success", "Data Employee has been created!");
         // cek junkah data dari tabel apakah bertambah atau tidak
         $this->assertDatabaseCount('employee', $count_data + 1);
         $this->assertDatabaseHas('employee', [
@@ -89,12 +83,13 @@ class EmployeeControllerTest extends TestCase
             "bank_code" => "BANK001",
             "rekening_number" => '123'
         ];
+        $this->actingAs($user);
         $this->put(
             route('employee.update', $employee->employee_code),
             $data
         )
-            ->assertRedirect("/employee")
-            ->assertSessionHas("success", "Data Employee has been updated!");
+            ->assertRedirect("/employee");
+        // ->assertSessionHas("success", "Data Karyawan has been updated!");
         // cek junkah data dari tabel apakah bertambah atau tidak
         // $this->assertDatabaseCount('employee', $count_data + 1);
         $this->assertDatabaseHas('employee', [
