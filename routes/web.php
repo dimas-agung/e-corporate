@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Product\UnitController;
+use App\Http\Controllers\Product\UomController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -74,5 +75,15 @@ Route::prefix('/product')->group(function () {
         Route::put('/unit/{unit}', 'update')->name('unit.update');
         Route::delete('/unit/{unit}', 'destroy')->name('unit.destroy');
         Route::get('/api/data_unit', 'dataUnit')->name('unit.data_unit');
+    });
+    Route::controller(UomController::class)->group(function () {
+        Route::get('/uom', 'index');
+        Route::get('/uom/create', 'create');
+        Route::post('/uom', 'store')->name('uom.store');
+        Route::get('/uom/{uom}', 'show');
+        Route::get('/uom/{uom}/edit', 'edit');
+        Route::put('/uom/{uom}', 'update')->name('uom.update');
+        Route::delete('/uom/{uom}', 'destroy')->name('uom.destroy');
+        Route::get('/api/data_uom', 'dataUom')->name('uom.data_uom');
     });
 });

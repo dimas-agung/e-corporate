@@ -115,8 +115,10 @@
                         <h6 class="collapse-header ">Master Satuan</h6>
                         <a class="collapse-item {{ request()->is('product/unit') ? 'active' : '' }}"
                             href="{{ url('product/unit') }}">Unit</a>
+                        <a class="collapse-item {{ request()->is('product/uom') ? 'active' : '' }}"
+                            href="{{ url('product/uom') }}">Uom</a>
                         <a class="collapse-item {{ request()->is('product/composit') ? 'active' : '' }}"
-                            href="{{ url('department') }}">Komposit</a>
+                            href="{{ url('product/composit') }}">Komposit</a>
 
                         <h6 class="collapse-header ">Master Material</h6>
                         <a class="collapse-item {{ request()->is('product/material') ? 'active' : '' }}"

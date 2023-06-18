@@ -23,10 +23,9 @@ class UomController extends Controller
     public function index()
     {
         // return 123;
-        $uoms = Uom::orderBy('uom_name')->get();
-        return response()->view('pages.master.uom', [
+        // $uoms = Uom::orderBy('uom_name')->get();
+        return response()->view('pages.product.uom.index', [
             'title' => $this->title,
-            'uoms' => $uoms
 
         ]);
     }

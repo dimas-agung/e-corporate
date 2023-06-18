@@ -36,6 +36,9 @@ class DatabaseSeeder extends Seeder
         $this->call(BankSeeder::class);
         $this->call(MaritalStatusSeeder::class);
         $this->call(EmployeeSeeder::class);
+        $this->call(UnitSeeder::class);
+        $this->call(UomSeeder::class);
+        $this->call(UomItemSeeder::class);
 
 
         Model::reguard();

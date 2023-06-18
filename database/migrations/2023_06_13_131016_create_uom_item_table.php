@@ -20,6 +20,7 @@ class CreateUomItemTable extends Migration
             $table->string('to_uom_code');
             $table->text('to_uom_desc');
             $table->text('item_number');
+            $table->float('value');
             $table->timestamps();
         });
     }
