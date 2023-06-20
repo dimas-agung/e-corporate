@@ -32,8 +32,8 @@
                                         <div class="row">
 
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" name="uom_code"
-                                                    placeholder="Masukkan Kode Uomt.." required>
+                                                <input type="text" class="form-control" name="uom_code" id="uom_code"
+                                                    placeholder="Masukkan Kode Uomt.." required onchange="setUomItem()">
                                                 <div class="form-group">
 
                                                 </div>
@@ -51,7 +51,7 @@
                                                 <div class="form-group">
                                                     <label for="uom_name">Nama Uom</label>
                                                     <input type="text" class="form-control" name="uom_name"
-                                                        placeholder="Masukkan Nama Uom.." required>
+                                                        placeholder="Masukkan Nama Uom.." required">
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -64,7 +64,8 @@
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     <label for="description">Unit</label>
-                                                    <select name="unit_code" id="unit_code" class="form-control" required>
+                                                    <select name="unit_code" id="unit_code" class="form-control slc-unit"
+                                                        required>
                                                         <option value="">-- Pilih Unit --</option>
                                                     </select>
                                                 </div>
@@ -72,47 +73,37 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <a class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Tambah Item</a>
+                                        <a class="btn btn-sm btn-primary" onclick="addDataDetail()"><i
+                                                class="fa fa-plus"></i>
+                                            Tambah Item</a>
                                     </div>
                                     <div>
-                                        <table class="table">
+                                        <table class="table" id="tbAddDetail">
                                             <thead>
                                                 <th>Uom Code</th>
-                                                <th>Uom Desc</th>
+
                                                 <th>To Uom Code</th>
-                                                <th>To Uom Desc</th>
+
                                                 <th>Value</th>
+                                                <th></th>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><input type="text" class="form-control" id="uom_code_items[]"
-                                                            name="uom_code_items[]" readonly></td>
                                                     <td><input type="text" class="form-control"
-                                                            id="uom_desc_items[]"name="uom_desc_items[]" readonly></td>
-                                                    <td><input type="text" class="form-control" id="to_uom_code_items[]"
-                                                            name="to_uom_code_items[]" readonly></td>
-                                                    <td><input type="text" class="form-control"
-                                                            id="to_uom_desc_items[]"name="to_uom_desc_items[]" readonly>
+                                                            id="uom_code_items_default" name="uom_code_items[]" readonly>
                                                     </td>
+
+                                                    <td><input type="text" class="form-control"
+                                                            id="to_uom_code_items_default" name="to_uom_code_items[]"
+                                                            readonly>
+                                                    </td>
+
                                                     <td><input type="number" class="form-control"
-                                                            id="value_items[]"name="value_items[]"></td>
+                                                            id="value_items_default"name="value_items[]" readonly></td>
+                                                    <td></td>
 
                                                 </tr>
-                                                <tr>
-                                                    <td>
 
-                                                    </td>
-                                                    <td><input type="text" class="form-control"
-                                                            id="uom_desc_items[]"name="uom_desc_items[]" readonly></td>
-                                                    <td><input type="text" class="form-control" id="to_uom_code_items[]"
-                                                            name="to_uom_code_items[]" readonly></td>
-                                                    <td><input type="text" class="form-control"
-                                                            id="to_uom_desc_items[]"name="to_uom_desc_items[]" readonly>
-                                                    </td>
-                                                    <td><input type="number" class="form-control"
-                                                            id="value_items[]"name="value_items[]"></td>
-
-                                                </tr>
                                             </tbody>
 
                                         </table>
@@ -248,6 +239,7 @@
                 position: 'topRight'
             });
         @endif
+        var dataSlcOptionUom = [];
         const tableRBA = $('.table-uom').DataTable({
             scrollX: true,
             scrollCollapse: true,
@@ -276,13 +268,75 @@
             $('#form-post').show();
             // $('#form-update').css("display", "none");
             $('#modalSearchData').modal('hide');
+            getSlcOptionUom()
         })
+
+        function getSlcOptionUom() {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('uom.data_uom') }}",
+                success: function(response) {
+                    let no = 1;
+                    let data = [];
+                    $.each(response, function() {
+                        dataSlcOptionUom.push({
+                            'data': `<option value='${this.uom_code}'>${this.uom_code}</option>`,
+                        });
+                    });
+                }
+            })
+            // console.log(dataSlcOptionUom);
+        }
+
+        function setUomItem() {
+            let uom_code = $('#uom_code').val();
+            $('#uom_code_items_default').val(uom_code)
+            $('#to_uom_code_items_default').val(uom_code)
+            $('#value_items_default').val(1)
+
+        }
 
         function modalSearchData() {
             getDataUom();
             $('#modalSearchData').modal('show');
             // $('#form-uom').attr('action').submit();
         }
+
+        function addDataDetail() {
+            var rowCount = $('#tbAddDetail tbody tr').length;
+            let no = rowCount + 1;
+            let slcOptionUom = '';
+            dataSlcOptionUom.forEach(element => {
+                slcOptionUom += `${element.data}`
+                // console.log(element);
+            });
+
+            $('#tbAddDetail tbody').append(`
+                                    <tr>
+                                        <td>
+                                            <select class="form-control slc-uom" id="uom_code_items[]" name="uom_code_items[]">
+                                                <option value=''>-- Pilih Uom --</option>
+                                                ${slcOptionUom}
+                                            </select>
+                                        </td>
+                                         
+                                        <td>
+                                            <select class="form-control slc-uom" id="to_uom_code_items[]" name="to_uom_code_items[]">
+                                                <option value=''>-- Pilih Uom --</option>
+                                                ${slcOptionUom}
+                                            </select>
+                                        </td>
+                                      
+                                        <td><input type="number" class="form-control" id="value_items[]"name="value_items[]"></td>
+                                        <td style='vertical-align:middle; text-align: center;font-weight:bold'><a class="btn btn-danger DeleteRow"><i class="fa fa-trash"></i><a></td>
+
+                                    </tr>
+
+                                `);
+        }
+        $("#tbAddDetail").on("click", ".DeleteRow", function() {
+            $(this).closest("tr").remove();
+        });
 
         function getDataUom() {
             // $("#tbUom tbody").html('');
@@ -383,7 +437,6 @@
                         }
                     });
                 },
-
             })
 
         });

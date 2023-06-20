@@ -143,7 +143,7 @@ class UomController extends Controller
         if ($request->input('uom_code') != null) {
             $uom = Uom::where('uom_code', $request->input('uom_code'))->orderBy('uom_name')->get();
         } else {
-            $uom = Uom::with(['uom'])->orderBy('uom_name')->get();
+            $uom = Uom::orderBy('uom_name')->get();
         }
         return response()
             ->json($uom);
