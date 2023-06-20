@@ -16,9 +16,9 @@ class CreateUomItemTable extends Migration
         Schema::create('uom_item', function (Blueprint $table) {
             $table->id();
             $table->string('uom_code');
-            $table->text('uom_desc');
+            $table->text('uom_desc')->nullable();
             $table->string('to_uom_code');
-            $table->text('to_uom_desc');
+            $table->text('to_uom_desc')->nullable();
             $table->text('item_number');
             $table->float('value');
             $table->timestamps();

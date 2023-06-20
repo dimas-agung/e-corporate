@@ -52,10 +52,12 @@ class UomController extends Controller
         $validated = $request->validate([
             'uom_code' => ['required'],
             'uom_name' => ['required'],
-            'uom_code_item' => 'required|array',
-            'uom_item_desc' => 'required|array',
-            'to_uom_code_item' => 'required|array',
-            'to_uom_item_desc' => 'required|array',
+            'description' => ['sometimes', 'nullable'],
+            'uom_code_items' => 'required|array',
+            // 'uom_item_desc' => 'required|array',
+            'to_uom_code_items' => 'required|array',
+            // 'to_uom_item_desc' => 'required|array',
+            'value_items' => 'required|array',
         ]);
         DB::transaction();
         $uom = Uom::create([
@@ -65,17 +67,20 @@ class UomController extends Controller
         ]);
         // get input uom items
         $uom_code_items = $request->input('uom_code_item');
-        $uom_item_desc = $request->input('uom_code_item_desc');
+        // $uom_item_desc = $request->input('uom_code_item_desc');
         $to_uom_code_items = $request->input('to_uom_code_item');
-        $to_uom_item_desc = $request->input('to_uom_item_desc');
+        $value_items = $request->input('value_items');
+        // $to_uom_item_desc = $request->input('to_uom_item_desc');
 
         $dataInsertUomItems = [];
         foreach ($uom_code_items as $key => $value) {
             $dataInsertUomItems[] = [
                 'uom_code' => $uom_code_items[$key],
-                'uom_desc' => $uom_item_desc[$key],
+                // 'uom_desc' => $uom_item_desc[$key],
                 'to_uom_code' => $to_uom_code_items[$key],
-                'to_uom_desc' => $to_uom_item_desc[$key],
+                'item_number' => $key,
+                'value' => $value_items[$key],
+                // 'to_uom_desc' => $to_uom_item_desc[$key],
             ];
         }
         $uomItem = UomItem::insert($dataInsertUomItems);
