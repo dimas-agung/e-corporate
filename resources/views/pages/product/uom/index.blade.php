@@ -33,7 +33,7 @@
 
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" name="uom_code" id="uom_code"
-                                                    placeholder="Masukkan Kode Uomt.." required onchange="setUomItem()">
+                                                    placeholder="Masukkan Kode Uom.." required onchange="setUomItem()">
                                                 <div class="form-group">
 
                                                 </div>
@@ -51,7 +51,7 @@
                                                 <div class="form-group">
                                                     <label for="uom_name">Nama Uom</label>
                                                     <input type="text" class="form-control" name="uom_name"
-                                                        placeholder="Masukkan Nama Uom.." required">
+                                                        placeholder="Masukkan Nama Uom.." required>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -90,16 +90,18 @@
                                             <tbody>
                                                 <tr>
                                                     <td><input type="text" class="form-control"
-                                                            id="uom_code_items_default" name="uom_code_items[]" readonly>
+                                                            id="uom_code_items_default" name="uom_code_items[]" readonly
+                                                            required>
                                                     </td>
 
                                                     <td><input type="text" class="form-control"
                                                             id="to_uom_code_items_default" name="to_uom_code_items[]"
-                                                            readonly>
+                                                            readonly required>
                                                     </td>
 
                                                     <td><input type="number" class="form-control"
-                                                            id="value_items_default"name="value_items[]" readonly></td>
+                                                            id="value_items_default"name="value_items[]" readonly required>
+                                                    </td>
                                                     <td></td>
 
                                                 </tr>
@@ -269,8 +271,24 @@
             // $('#form-update').css("display", "none");
             $('#modalSearchData').modal('hide');
             getSlcOptionUom()
+            getSlcOptionUnit()
         })
 
+        function getSlcOptionUnit() {
+
+            $.ajax({
+                type: "GET",
+                url: "{{ route('unit.data_unit') }}",
+                success: function(response) {
+                    let no = 1;
+                    let data = [];
+                    $.each(response, function() {
+                        $('.slc-unit').append($("<option />").val(this.unit_code).text(this.unit_code));
+                    });
+                }
+            })
+        }
+        // console.log(dataSlcOptionUom);
         function getSlcOptionUom() {
             $.ajax({
                 type: "GET",
@@ -279,6 +297,7 @@
                     let no = 1;
                     let data = [];
                     $.each(response, function() {
+
                         dataSlcOptionUom.push({
                             'data': `<option value='${this.uom_code}'>${this.uom_code}</option>`,
                         });
@@ -290,6 +309,24 @@
 
         function setUomItem() {
             let uom_code = $('#uom_code').val();
+            $.ajax({
+                type: "GET",
+                url: "{{ route('uom.is_unique_uom_code') }}",
+                data: {
+                    uom_code: uom_code
+                },
+                success: function(response) {
+                    if (response == true) {
+                        iziToast.error({
+                            title: 'Error!',
+                            message: 'Kode Uom sudah digunakan',
+                            position: 'topRight'
+                        });
+                        let uom_code = $('#uom_code').val(null);
+                        return
+                    }
+                }
+            })
             $('#uom_code_items_default').val(uom_code)
             $('#to_uom_code_items_default').val(uom_code)
             $('#value_items_default').val(1)
@@ -306,6 +343,7 @@
             var rowCount = $('#tbAddDetail tbody tr').length;
             let no = rowCount + 1;
             let slcOptionUom = '';
+            let uom_code_default = $('#uom_code_items_default').val()
             dataSlcOptionUom.forEach(element => {
                 slcOptionUom += `${element.data}`
                 // console.log(element);
@@ -314,20 +352,16 @@
             $('#tbAddDetail tbody').append(`
                                     <tr>
                                         <td>
-                                            <select class="form-control slc-uom" id="uom_code_items[]" name="uom_code_items[]">
-                                                <option value=''>-- Pilih Uom --</option>
-                                                ${slcOptionUom}
-                                            </select>
+                                            <input type="text" class="form-control" name="uom_code_items[]" value="${uom_code_default}" required readonly>
                                         </td>
-                                         
                                         <td>
-                                            <select class="form-control slc-uom" id="to_uom_code_items[]" name="to_uom_code_items[]">
+                                            <select class="form-control slc-uom" id="to_uom_code_items[]" name="to_uom_code_items[]"  required>
                                                 <option value=''>-- Pilih Uom --</option>
                                                 ${slcOptionUom}
                                             </select>
                                         </td>
                                       
-                                        <td><input type="number" class="form-control" id="value_items[]"name="value_items[]"></td>
+                                        <td><input type="number" class="form-control" id="value_items[]"name="value_items[]"  required></td>
                                         <td style='vertical-align:middle; text-align: center;font-weight:bold'><a class="btn btn-danger DeleteRow"><i class="fa fa-trash"></i><a></td>
 
                                     </tr>

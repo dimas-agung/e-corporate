@@ -84,6 +84,8 @@ Route::prefix('/product')->group(function () {
         Route::get('/uom/{uom}/edit', 'edit');
         Route::put('/uom/{uom}', 'update')->name('uom.update');
         Route::delete('/uom/{uom}', 'destroy')->name('uom.destroy');
+
+        Route::get('/api/is_unique_uom_code', 'isUniqueUomCode')->name('uom.is_unique_uom_code');
         Route::get('/api/data_uom', 'dataUom')->name('uom.data_uom');
     });
 });
