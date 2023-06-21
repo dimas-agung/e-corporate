@@ -183,6 +183,29 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <a class="btn btn-sm btn-primary" onclick="addDataDetailEdit()"><i
+                                                    class="fa fa-plus"></i>
+                                                Tambah Item</a>
+                                        </div>
+                                        <div>
+                                            <table class="table" id="tbAddDetailEdit">
+                                                <thead>
+                                                    <th>Uom Code</th>
+
+                                                    <th>To Uom Code</th>
+
+                                                    <th>Value</th>
+                                                    <th></th>
+                                                </thead>
+                                                <tbody>
+
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
                                     </div>
                                     <div class="float-right">
                                         <button class="btn btn-success"><i class="fas fa-save"></i>
@@ -372,6 +395,39 @@
             $(this).closest("tr").remove();
         });
 
+        function addDataDetailEdit() {
+            var rowCount = $('#tbAddDetailEdit tbody tr').length;
+            let no = rowCount + 1;
+            let slcOptionUom = '';
+            let uom_code_default = $('#uom_code_edit').val()
+            dataSlcOptionUom.forEach(element => {
+                slcOptionUom += `${element.data}`
+                // console.log(element);
+            });
+
+            $('#tbAddDetailEdit tbody').append(`
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" name="uom_code_items[]" value="${uom_code_default}" required readonly>
+                                        </td>
+                                        <td>
+                                            <select class="form-control slc-uom" id="to_uom_code_items[]" name="to_uom_code_items[]"  required>
+                                                <option value=''>-- Pilih Uom --</option>
+                                                ${slcOptionUom}
+                                            </select>
+                                        </td>
+                                      
+                                        <td><input type="number" class="form-control" id="value_items[]"name="value_items[]"  required></td>
+                                        <td style='vertical-align:middle; text-align: center;font-weight:bold'><a class="btn btn-danger DeleteRow"><i class="fa fa-trash"></i><a></td>
+
+                                    </tr>
+
+                                `);
+        }
+        $("#tbAddDetailEdit").on("click", ".DeleteRow", function() {
+            $(this).closest("tr").remove();
+        });
+
         function getDataUom() {
             // $("#tbUom tbody").html('');
             tableRBA.clear().draw();
@@ -394,29 +450,66 @@
                         no++;
                         // $('#tbUom tbody').append(`
 
+                });
+                tableRBA.rows.add(data).draw();
+            }
+        })
+
+    }
+
+
+    function getDetail(uom_code) {
+        $.ajax({
+            type: "GET",
+            url: "{{ route('uom.data_uom') }}",
+            data: {
+                uom_code: uom_code
+            },
+            success: function(response) {
+                console.log(response.uom_name);
+                // $('#uom_code_edit').val(response.uom_code)
+                $('#uom_name_edit').val(response.uom_name)
+                $('#uom_code_edit').val(response.uom_code)
+                $('#description_edit').val(response.description)
+            }
+        })
+        //get items
+        $.ajax({
+            type: "GET",
+            url: "{{ route('uom.data_uom_items') }}",
+            data: {
+                uom_code: uom_code
+            },
+            success: function(response) {
+                let no = 1
+                // dataSlcOptionUom.forEach(element => {
+                //     slcOptionUom += `${element.data}`
+                //     // console.log(element);
+                // });
+                $.each(response, function() {
+                    $('#tbAddDetailEdit tbody').append(`
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control" name="uom_code_items[]" value="${this.uom_code}" required readonly>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control" name="uom_code_items[]" value="${this.to_uom_code}" required readonly>
+                                                                           
+                                                                        </td>
+                                                                      
+                                                                        <td><input type="number" class="form-control" id="value_items[]"name="value_items[]" value="${this.value}"  required></td>
+                                                                        <td style='vertical-align:middle; text-align: center;font-weight:bold'><a class="btn btn-danger DeleteRow"><i class="fa fa-trash"></i><a></td>
+
+                                                                    </tr>
+
+                                                                `);
+
                     });
-                    tableRBA.rows.add(data).draw();
+
                 }
             })
 
-        }
 
-
-        function getDetail(uom_code) {
-            $.ajax({
-                type: "GET",
-                url: "{{ route('uom.data_uom') }}",
-                data: {
-                    uom_code: uom_code
-                },
-                success: function(response) {
-                    console.log(response.uom_name);
-                    // $('#uom_code_edit').val(response.uom_code)
-                    $('#uom_name_edit').val(response.uom_name)
-                    $('#uom_code_edit').val(response.uom_code)
-                    $('#description_edit').val(response.description)
-                }
-            })
             $('#uom_code_edit').val(uom_code)
             $('#form-post').hide();
 

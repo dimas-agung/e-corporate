@@ -156,9 +156,20 @@ class UomController extends Controller
     {
         // return 123;
         if ($request->input('uom_code') != null) {
-            $uom = Uom::where('uom_code', $request->input('uom_code'))->orderBy('uom_name')->get();
+            $uom = Uom::where('uom_code', $request->input('uom_code'))->orderBy('uom_name')->first();
         } else {
             $uom = Uom::orderBy('uom_name')->get();
+        }
+        return response()
+            ->json($uom);
+    }
+    public function dataUomItems(Request $request)
+    {
+        // return 123;
+        if ($request->input('uom_code') != null) {
+            $uom = UomItem::where('uom_code', $request->input('uom_code'))->orderBy('item_number')->get();
+        } else {
+            $uom = UomItem::orderBy('uom_name')->get();
         }
         return response()
             ->json($uom);

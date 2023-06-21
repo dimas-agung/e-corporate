@@ -87,5 +87,6 @@ Route::prefix('/product')->group(function () {
 
         Route::get('/api/is_unique_uom_code', 'isUniqueUomCode')->name('uom.is_unique_uom_code');
         Route::get('/api/data_uom', 'dataUom')->name('uom.data_uom');
+        Route::get('/api/data_uom_items', 'dataUomItems')->name('uom.data_uom_items');
     });
 });
