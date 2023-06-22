@@ -63,7 +63,7 @@ class UomController extends Controller
             // 'to_uom_item_desc' => 'required|array',
             'value_items' => 'required|array',
         ]);
-        // DB::transaction();
+        DB::beginTransaction();
         $uom = Uom::create([
             'uom_code' => $request->input('uom_code'),
             'uom_name' => $request->input('uom_name'),
@@ -89,7 +89,7 @@ class UomController extends Controller
             ];
         }
         $uomItem = UomItem::insert($dataInsertUomItems);
-        // DB::commit();
+        DB::commit();
 
         return redirect('product/uom')->with('success', 'Data Uom berhasil disimpan!');
     }
@@ -127,11 +127,65 @@ class UomController extends Controller
     {
         //
         $validated = $request->validate([
-            // 'uom_code' => ['required'],
+            'uom_code' => ['required'],
             'uom_name' => ['required'],
+            'unit_code' => ['required'],
+            'description' => ['sometimes', 'nullable'],
+            'uom_code_items' => 'required|array',
+
+            'to_uom_code_items' => 'required|array',
+            'value_items' => 'required|array'
         ]);
-        $uom = $uom->update($validated);
-        return redirect('uom')->with('success', 'Data Uom has been updated!');
+
+        DB::beginTransaction();
+        $uom->update([
+            'uom_name' => $request->input('uom_name'),
+            'unit_code' => $request->input('unit_code'),
+            'description' => $request->input('uom_name'),
+        ]);
+        // var_dump($uom);
+        // return;
+
+        $uom_code_items = $request->input('uom_code_items');
+        $to_uom_code_items = $request->input('to_uom_code_items');
+        $value_items = $request->input('value_items');
+
+        $dataInsertUomItems = [];
+        foreach ($uom_code_items as $key => $value) {
+            $dataInsertUomItems[] = [
+                'uom_code' => $uom_code_items[$key],
+                'to_uom_code' => $to_uom_code_items[$key],
+                'item_number' => $key,
+                'value' => $value_items[$key],
+            ];
+        }
+        $data = [
+            [
+                'uom_code' => 'Krt24',
+                'uom_desc' => 'Karton 24',
+                'to_uom_code' => 'Krt24',
+                'to_uom_desc' => 'Karton 24',
+                'item_number' => '0',
+                'value' => '1',
+
+            ],
+            [
+                'uom_code' => 'Krt24',
+                'uom_desc' => 'Karton 24',
+                'to_uom_code' => 'Pcs',
+                'to_uom_desc' => 'Pieces',
+                'item_number' => '1',
+                'value' => '24',
+            ],
+        ];
+        // var_dump($data);
+        // return;
+        UomItem::where('uom_code', $request->input('uom_code'))->delete();
+        $uomItem = UomItem::insert($dataInsertUomItems);
+
+        DB::commit();
+
+        return redirect('product/uom')->with('success', 'Data Uom has been updated!');
     }
 
     /**

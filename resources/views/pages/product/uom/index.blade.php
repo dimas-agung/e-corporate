@@ -182,6 +182,15 @@
                                                         id="description_edit" placeholder="Masukkan Keterangan..">
                                                 </div>
                                             </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="description">Unit</label>
+                                                    <select name="unit_code" id="unit_code_edit"
+                                                        class="form-control slc-unit" required>
+                                                        <option value="">-- Pilih Unit --</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <br>
                                         <div class="form-group">
@@ -470,6 +479,7 @@
                 // $('#uom_code_edit').val(response.uom_code)
                 $('#uom_name_edit').val(response.uom_name)
                 $('#uom_code_edit').val(response.uom_code)
+                $('#unit_code_edit').val(response.unit_code)
                 $('#description_edit').val(response.description)
             }
         })
@@ -488,21 +498,21 @@
                 // });
                 $.each(response, function() {
                     $('#tbAddDetailEdit tbody').append(`
-                                                                    <tr>
-                                                                        <td>
-                                                                            <input type="text" class="form-control" name="uom_code_items[]" value="${this.uom_code}" required readonly>
-                                                                            </td>
-                                                                            <td>
-                                                                                <input type="text" class="form-control" name="uom_code_items[]" value="${this.to_uom_code}" required readonly>
-                                                                           
-                                                                        </td>
-                                                                      
-                                                                        <td><input type="number" class="form-control" id="value_items[]"name="value_items[]" value="${this.value}"  required></td>
-                                                                        <td style='vertical-align:middle; text-align: center;font-weight:bold'><a class="btn btn-danger DeleteRow"><i class="fa fa-trash"></i><a></td>
+                                                                                                            <tr>
+                                                                                                                <td>
+                                                                                                                    <input type="text" class="form-control" name="uom_code_items[]" value="${this.uom_code}" required readonly>
+                                                                                                                    </td>
+                                                                                                                    <td>
+                                                                                                                        <input type="text" class="form-control" name="to_uom_code_items[]" value="${this.to_uom_code}" required readonly>
+                                                                                                                   
+                                                                                                                </td>
+                                                                                                              
+                                                                                                                <td><input type="number" class="form-control" id="value_items[]"name="value_items[]" value="${this.value}"  required></td>
+                                                                                                                <td style='vertical-align:middle; text-align: center;font-weight:bold'><a class="btn btn-danger DeleteRow"><i class="fa fa-trash"></i><a></td>
 
-                                                                    </tr>
+                                                                                                            </tr>
 
-                                                                `);
+                                                                                                        `);
 
                     });
 
@@ -511,6 +521,7 @@
 
 
             $('#uom_code_edit').val(uom_code)
+
             $('#form-post').hide();
 
             // $('#form-update').css("display", "block");
