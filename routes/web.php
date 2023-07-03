@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Product\CompositController;
 use App\Http\Controllers\Product\UnitController;
 use App\Http\Controllers\Product\UomController;
 use Illuminate\Support\Facades\Route;
@@ -88,5 +89,18 @@ Route::prefix('/product')->group(function () {
         Route::get('/api/is_unique_uom_code', 'isUniqueUomCode')->name('uom.is_unique_uom_code');
         Route::get('/api/data_uom', 'dataUom')->name('uom.data_uom');
         Route::get('/api/data_uom_items', 'dataUomItems')->name('uom.data_uom_items');
+    });
+    Route::controller(CompositController::class)->group(function () {
+        Route::get('/composit', 'index');
+        Route::get('/composit/create', 'create');
+        Route::post('/composit', 'store')->name('composit.store');
+        Route::get('/composit/{composit}', 'show');
+        Route::get('/composit/{composit}/edit', 'edit');
+        Route::put('/composit/{composit}', 'update')->name('composit.update');
+        Route::delete('/composit/{composit}', 'destroy')->name('composit.destroy');
+
+        Route::get('/api/is_unique_composit_code', 'isUniqueUomCode')->name('composit.is_unique_composit_code');
+        Route::get('/api/data_composit', 'dataUom')->name('composit.data_composit');
+        Route::get('/api/data_composit_items', 'dataUomItems')->name('composit.data_composit_items');
     });
 });
