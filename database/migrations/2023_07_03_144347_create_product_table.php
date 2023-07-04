@@ -18,6 +18,7 @@ class CreateProductTable extends Migration
             $table->string('product_code')->unique();
             $table->string('product_name');
             $table->string('product_nickname');
+            $table->string('product_fullname');
             $table->string('uom_code');
             $table->foreign('uom_code')->references('uom_code')->on('uom');
             $table->string('composit')->nullable();

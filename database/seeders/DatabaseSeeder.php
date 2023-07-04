@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\MaterialCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -39,6 +40,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UnitSeeder::class);
         $this->call(UomSeeder::class);
         $this->call(UomItemSeeder::class);
+        $this->call(MaterialCategorySeeder::class);
+        $this->call(MaterialSeeder::class);
 
 
         Model::reguard();

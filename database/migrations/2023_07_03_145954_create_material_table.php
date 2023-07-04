@@ -17,8 +17,10 @@ class CreateMaterialTable extends Migration
             $table->string('material_code')->unique();
             $table->string('material_name');
             $table->string('material_nickname');
+            $table->string('material_fullname');
             $table->string('uom_code');
             $table->foreign('uom_code')->references('uom_code')->on('uom');
+            $table->float('content_unit');
             $table->string('composit')->nullable();
             $table->string('merk');
             $table->string('type');

@@ -17,7 +17,7 @@ class CreateMaterialCategoryTable extends Migration
             $table->id();
             $table->string('material_category_code')->unique();
             $table->string('material_category_name');
-            $table->text('material_category_code_parent');
+            $table->string('material_category_code_parent')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });
