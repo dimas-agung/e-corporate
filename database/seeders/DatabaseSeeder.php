@@ -42,6 +42,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UomItemSeeder::class);
         $this->call(MaterialCategorySeeder::class);
         $this->call(MaterialSeeder::class);
+        $this->call(TaxSeeder::class);
+        $this->call(PrincipleClassSeeder::class);
+        $this->call(ProductCategoryTypeSeeder::class);
+        $this->call(ProductCategorySeeder::class);
 
 
         Model::reguard();

@@ -19,6 +19,8 @@ class CreateProductTable extends Migration
             $table->string('product_name');
             $table->string('product_nickname');
             $table->string('product_fullname');
+            $table->string('principle_class_code');
+            $table->foreign('principle_class_code')->references('principle_class_code')->on('principle_class');
             $table->string('uom_code');
             $table->foreign('uom_code')->references('uom_code')->on('uom');
             $table->string('composit')->nullable();
@@ -27,8 +29,10 @@ class CreateProductTable extends Migration
             $table->text('spesification')->nullable();
             $table->string('serial_number');
             $table->float('price');
-            $table->string('valid_start_at')->nullable();
-            $table->string('valid_start_end')->nullable();
+            $table->string('tax_code');
+            $table->foreign('tax_code')->references('tax_code')->on('tax');
+            $table->date('valid_start_at')->nullable();
+            $table->date('valid_end_at')->nullable();
             $table->string('product_category_1');
             $table->foreign('product_category_1')->references('product_category_code')->on('product_category');
             $table->text('description')->nullable();
