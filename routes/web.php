@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Product\CompositController;
+use App\Http\Controllers\Product\ProductCategoryTypeController;
+use App\Http\Controllers\Product\TaxController;
 use App\Http\Controllers\Product\UnitController;
 use App\Http\Controllers\Product\UomController;
 use Illuminate\Support\Facades\Route;
@@ -102,5 +104,27 @@ Route::prefix('/product')->group(function () {
         Route::get('/api/is_unique_composit_code', 'isUniqueUomCode')->name('composit.is_unique_composit_code');
         Route::get('/api/data_composit', 'dataUom')->name('composit.data_composit');
         Route::get('/api/data_composit_items', 'dataUomItems')->name('composit.data_composit_items');
+    });
+    Route::controller(TaxController::class)->group(function () {
+        Route::get('/tax', 'index');
+        Route::get('/tax/create', 'create');
+        Route::post('/tax', 'store')->name('tax.store');
+        Route::get('/tax/{tax}', 'show');
+        Route::get('/tax/{tax}/edit', 'edit');
+        Route::put('/tax/{tax}', 'update')->name('tax.update');
+        Route::delete('/tax/{tax}', 'destroy')->name('tax.destroy');
+        Route::get('/api/is_unique_tax_code', 'isUniqueCode')->name('tax.is_unique_tax_code');
+        Route::get('/api/data_tax', 'dataTax')->name('tax.data_tax');
+    });
+    Route::controller(ProductCategoryTypeController::class)->group(function () {
+        Route::get('/product_category_type', 'index');
+        Route::get('/product_category_type/create', 'create');
+        Route::post('/product_category_type', 'store')->name('product_category_type.store');
+        Route::get('/product_category_type/{product_category_type}', 'show');
+        Route::get('/product_category_type/{product_category_type}/edit', 'edit');
+        Route::put('/product_category_type/{product_category_type}', 'update')->name('product_category_type.update');
+        Route::delete('/product_category_type/{product_category_type}', 'destroy')->name('product_category_type.destroy');
+        Route::get('/api/product_category_type/is_unique_code', 'isUniqueCode')->name('product_category_type.is_unique_code');
+        Route::get('/api/product_category_type/data', 'dataProductCategoryType')->name('product_category_type.data');
     });
 });

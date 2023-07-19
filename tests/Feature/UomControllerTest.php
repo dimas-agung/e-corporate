@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Uom;
-use App\Models\Uom;
 use App\Models\UomItem;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
