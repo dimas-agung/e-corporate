@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Product\CompositController;
+use App\Http\Controllers\Product\PrincipleClassController;
 use App\Http\Controllers\Product\ProductCategoryTypeController;
 use App\Http\Controllers\Product\TaxController;
 use App\Http\Controllers\Product\UnitController;
@@ -115,6 +116,17 @@ Route::prefix('/product')->group(function () {
         Route::delete('/tax/{tax}', 'destroy')->name('tax.destroy');
         Route::get('/api/is_unique_tax_code', 'isUniqueCode')->name('tax.is_unique_tax_code');
         Route::get('/api/data_tax', 'dataTax')->name('tax.data_tax');
+    });
+    Route::controller(PrincipleClassController::class)->group(function () {
+        Route::get('/principle_class', 'index');
+        Route::get('/principle_class/create', 'create');
+        Route::post('/principle_class', 'store')->name('principle_class.store');
+        Route::get('/principle_class/{principle_class}', 'show');
+        Route::get('/principle_class/{principle_class}/edit', 'edit');
+        Route::put('/principle_class/{principle_class}', 'update')->name('principle_class.update');
+        Route::delete('/principle_class/{principle_class}', 'destroy')->name('principle_class.destroy');
+        Route::get('/api/principle_class/is_unique_code', 'isUniqueCode')->name('principle_class.is_unique_code');
+        Route::get('/api/principle_class/data', 'dataPrincipleClass')->name('principle_class.data_principle_class');
     });
     Route::controller(ProductCategoryTypeController::class)->group(function () {
         Route::get('/product_category_type', 'index');

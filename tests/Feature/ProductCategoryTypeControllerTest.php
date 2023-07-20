@@ -50,7 +50,7 @@ class ProductCategoryTypeControllerTest extends TestCase
         $productcategorytype = ProductCategoryType::latest()->first();
         $count_data = ProductCategoryType::count();
         $data =  [
-            "product_category_type_name" => "qweq",
+            "product_category_type_name" => "PRODUCTCATEGORYTYPE TEST UPDATE " . $count_data,
             'description' => 'TEST UPDATE'
         ];
         $this->actingAs($user);
@@ -71,7 +71,7 @@ class ProductCategoryTypeControllerTest extends TestCase
         $user = User::find(1);
         $productcategorytype = ProductCategoryType::latest()->first();
         $this->actingAs($user);
-        $this->delete(route('product_category_type.destroy', 3))
+        $this->delete(route('product_category_type.destroy', $productcategorytype->product_category_type_code))
             ->assertRedirect("/product/product_category_type");
         // ->assertSessionHas("success", "Data Product has been deleted!");
         // cek apakah data sudah kosong setelah dihapus

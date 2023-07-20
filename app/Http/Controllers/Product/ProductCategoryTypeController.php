@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProductCategoryType;
+use App\Models\Tax;
 use Illuminate\Http\Request;
 
 class ProductCategoryTypeController extends Controller
@@ -21,13 +22,12 @@ class ProductCategoryTypeController extends Controller
      */
     public function index()
     {
-        $productcategorytype = ProductCategoryType::get();
-        // return $productcategorytype;
-        // return 123;
-        // $productcategorytypes = ProductCategoryType::orderBy('productcategorytype_name')->get();
+        $product_category_type = ProductCategoryType::get();
+
+       
         return response()->view('pages.product.product_category_type.index', [
             'title' => $this->title,
-            'productcategorytype' => $productcategorytype
+            'product_category_type' => $product_category_type
         ]);
     }
 
@@ -56,7 +56,7 @@ class ProductCategoryTypeController extends Controller
             'product_category_type_parent_code' => ['sometimes', 'nullable'],
             'description' => ['sometimes', 'nullable'],
         ]);
-        $productcategorytype = ProductCategoryType::create($validated);
+        $product_category_type = ProductCategoryType::create($validated);
 
         return redirect('product/product_category_type')->with('success', 'Data Seksi berhasil disimpan!');
     }
@@ -90,18 +90,18 @@ class ProductCategoryTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProductCategoryType $productcategorytype)
+    public function update(Request $request, ProductCategoryType $product_category_type)
     {
         //
         $validated = $request->validate([
-            // 'product_category_type_name' => ['required'],
-            // 'product_category_type_parent_code' => ['sometimes', 'nullable'],
+            'product_category_type_name' => ['required'],
+            'product_category_type_parent_code' => ['sometimes', 'nullable'],
             'description' => ['sometimes', 'nullable'],
         ]);
-        return $productcategorytype;
+        // return $product_category_type;
         // return 123;
-        // $productcategorytype = ProductCategoryType::latest()->first();
-        $productcategorytype = $productcategorytype->update($validated);
+        // $product_category_type = ProductCategoryType::latest()->first();
+        $product_category_type = $product_category_type->update($validated);
         // return redirect('product/product_category_type')->with('success', 'Data ProductCategoryType has been updated!');
     }
 
@@ -111,11 +111,11 @@ class ProductCategoryTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductCategoryType $productcategorytype)
+    public function destroy(ProductCategoryType $product_category_type)
     {
         // ProductCategoryType::where('id', 2)->delete();
-        // $productcategorytype1 = ProductCategoryType::latest()->first();
-        $productcategorytype->delete();
+        // $product_category_type1 = ProductCategoryType::latest()->first();
+        $product_category_type->delete();
         return redirect('product/product_category_type')->with('success', 'Data ProductCategoryType has been deleted!');
     }
     //
@@ -123,10 +123,10 @@ class ProductCategoryTypeController extends Controller
     {
         // return 123;
         if ($request->input('product_category_type_code') != null) {
-            $productcategorytype = ProductCategoryType::where('product_category_type_code', $request->input('product_category_type_code'))->orderBy('product_category_type_name')->get();
+            $product_category_type = ProductCategoryType::where('product_category_type_code', $request->input('product_category_type_code'))->orderBy('product_category_type_name')->get();
         } else {
-            $productcategorytype = ProductCategoryType::orderBy('product_category_type_name')->get();
+            $product_category_type = ProductCategoryType::orderBy('product_category_type_name')->get();
         }
-        return $productcategorytype;
+        return $product_category_type;
     }
 }
