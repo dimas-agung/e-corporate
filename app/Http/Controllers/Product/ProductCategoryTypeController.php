@@ -13,7 +13,7 @@ class ProductCategoryTypeController extends Controller
     private $title = 'ProductCategoryType';
     public function __construct()
     {
-        // $this->middleware('auth');
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -24,7 +24,7 @@ class ProductCategoryTypeController extends Controller
     {
         $product_category_type = ProductCategoryType::get();
 
-       
+
         return response()->view('pages.product.product_category_type.index', [
             'title' => $this->title,
             'product_category_type' => $product_category_type

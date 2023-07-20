@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Product\CompositController;
 use App\Http\Controllers\Product\PrincipleClassController;
+use App\Http\Controllers\Product\ProductCategoryController;
 use App\Http\Controllers\Product\ProductCategoryTypeController;
 use App\Http\Controllers\Product\TaxController;
 use App\Http\Controllers\Product\UnitController;
@@ -138,5 +139,16 @@ Route::prefix('/product')->group(function () {
         Route::delete('/product_category_type/{product_category_type}', 'destroy')->name('product_category_type.destroy');
         Route::get('/api/product_category_type/is_unique_code', 'isUniqueCode')->name('product_category_type.is_unique_code');
         Route::get('/api/product_category_type/data', 'dataProductCategoryType')->name('product_category_type.data');
+    });
+    Route::controller(ProductCategoryController::class)->group(function () {
+        Route::get('/product_category', 'index');
+        Route::get('/product_category/create', 'create');
+        Route::post('/product_category', 'store')->name('product_category.store');
+        Route::get('/product_category/{product_category}', 'show');
+        Route::get('/product_category/{product_category}/edit', 'edit');
+        Route::put('/product_category/{product_category}', 'update')->name('product_category.update');
+        Route::delete('/product_category/{product_category}', 'destroy')->name('product_category.destroy');
+        Route::get('/api/product_category/is_unique_code', 'isUniqueCode')->name('product_category.is_unique_code');
+        Route::get('/api/product_category/data', 'dataProductCategory')->name('product_category.data');
     });
 });
