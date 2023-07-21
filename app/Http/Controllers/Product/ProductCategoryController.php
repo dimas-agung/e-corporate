@@ -22,7 +22,7 @@ class ProductCategoryController extends Controller
     public function index()
     {
         $product_category = ProductCategory::get();
-        return 123;
+        // return 123;
 
         return response()->view('pages.product.product_category.index', [
             'title' => $this->title,
@@ -58,7 +58,7 @@ class ProductCategoryController extends Controller
         ]);
         $product_category = ProductCategory::create($validated);
 
-        return redirect('product/product_category')->with('success', 'Data Seksi berhasil disimpan!');
+        return redirect('product/product_category')->with('success', 'Data Produk Kategori berhasil disimpan!');
     }
 
     /**
@@ -103,7 +103,7 @@ class ProductCategoryController extends Controller
         // return 123;
         // $product_category = ProductCategory::latest()->first();
         $product_category = $product_category->update($validated);
-        // return redirect('product/product_category')->with('success', 'Data ProductCategory has been updated!');
+        return redirect('product/product_category')->with('success', 'Data Produk Kategori has been updated!');
     }
 
     /**
@@ -116,7 +116,7 @@ class ProductCategoryController extends Controller
     {
 
         $product_category->delete();
-        return redirect('product/product_category')->with('success', 'Data ProductCategory has been deleted!');
+        return redirect('product/product_category')->with('success', 'Data Produk Kategori has been deleted!');
     }
     //
     public function dataProductCategory(Request $request)

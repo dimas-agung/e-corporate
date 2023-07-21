@@ -129,9 +129,11 @@
 
                         <h6 class="collapse-header ">Master Produk</h6>
                         <a class="collapse-item {{ request()->is('product/product') ? 'active' : '' }}"
-                            href="{{ url('employee') }}">Produk</a>
+                            href="{{ url('product/product') }}">Produk</a>
                         <a class="collapse-item {{ request()->is('product/product_category') ? 'active' : '' }}"
-                            href="{{ url('department') }}">Kategori Produk</a>
+                            href="{{ url('product/product_category') }}">Kategori Produk</a>
+                        <a class="collapse-item {{ request()->is('product/product_category_type') ? 'active' : '' }}"
+                            href="{{ url('product/product_category_type') }}">Kategori Produk Tipe</a>
 
                     </div>
                 </div>

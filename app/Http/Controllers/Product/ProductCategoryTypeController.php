@@ -58,7 +58,7 @@ class ProductCategoryTypeController extends Controller
         ]);
         $product_category_type = ProductCategoryType::create($validated);
 
-        return redirect('product/product_category_type')->with('success', 'Data Seksi berhasil disimpan!');
+        return redirect('product/product_category_type')->with('success', 'Data Produk Kategori Tipe berhasil disimpan!');
     }
 
     /**
@@ -102,7 +102,7 @@ class ProductCategoryTypeController extends Controller
         // return 123;
         // $product_category_type = ProductCategoryType::latest()->first();
         $product_category_type = $product_category_type->update($validated);
-        // return redirect('product/product_category_type')->with('success', 'Data ProductCategoryType has been updated!');
+        return redirect('product/product_category_type')->with('success', 'Data Produk Kategori Tipe has been updated!');
     }
 
     /**
@@ -116,7 +116,7 @@ class ProductCategoryTypeController extends Controller
         // ProductCategoryType::where('id', 2)->delete();
         // $product_category_type1 = ProductCategoryType::latest()->first();
         $product_category_type->delete();
-        return redirect('product/product_category_type')->with('success', 'Data ProductCategoryType has been deleted!');
+        return redirect('product/product_category_type')->with('success', 'Data Produk Kategori Tipe has been deleted!');
     }
     //
     public function dataProductCategoryType(Request $request)
